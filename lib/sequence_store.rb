@@ -1,3 +1,19 @@
+# Provides tree-like storage for character sequence of a fixed length, and logic
+#  to expose all <b>unique</b> sequences pushed to an instance along with their source
+#  word.
+#
+# == Example Usage
+#
+# ss = SequenceStore.new
+# ss.push('abso', 'absolute')
+# ss.unique_sequences
+#    returns: [['abso','absolute']]
+#
+# == Fixed Sequence Length Requirement
+#
+# Due to the internal storage logic, the current verison of this class requires that sequences being
+#  stored are all of the same length.  It could be enhanced to store variable length sequences
+#  by enhancing the way leaf nodes are stored.
 class SequenceStore
 
   def initialize
@@ -10,6 +26,8 @@ class SequenceStore
     raise Exception.new "Parameters must be a strings" unless sequence.is_a?(String) \
       && source_word.is_a?(String)
 
+    new_sequence_flag = nil #variable to store whether or not the sequence was new to the store
+    
     # Fetch the leaf node and it's parent node for the current sequence
     leaf, parent = leaf_and_parent_nodes_for sequence
 
@@ -17,11 +35,15 @@ class SequenceStore
       # if the leaf node is an empty hash, this is the first time we've seen this sequence
       #   therefore, store the source word
       parent.store(sequence.chars.last, source_word)
+      new_sequence_flag = true
     else
       # if the leaf node is not an empty hash, this is a duplicate sequence
       #   therefore, set the value to nil
       parent.store(sequence.chars.last, nil)
+      new_sequence_flag = false
     end
+    
+    new_sequence_flag
   end
   
   def unique_sequences
