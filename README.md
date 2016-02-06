@@ -5,14 +5,14 @@
 
 This is an implementation of the challenge published at https://gist.github.com/pedromartinez/7788650.
 
-The implementation was coded against Ruby version 2.3.0 and RubyGems version 2.5.1, but may work 
-with earlier versions.
+The implementation was coded against Ruby version 2.3.0, RubyGems version 2.5.1, and bundler version
+1.11.2 but may work with earlier versions.
 
 To run the application:
 
 1. Clone this repo onto a system meeting the above requirements
 2. `cd` into the root directory of the repo
-3. Run `bundle` in the root directory
+3. Run `bundle` 
 4. Run `ruby words_challenge.rb` and follow instructions
 5. Examine the output created in the 'out' subdirectory
 
